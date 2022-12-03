@@ -1,0 +1,1 @@
+This folder should basically be a copy of the postgresql package structure; except everything "postgresql" should be renamed to the name of this package/database.

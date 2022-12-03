@@ -1,0 +1,79 @@
+
+server:
+  port: 8888
+
+application:
+  database:
+    postgresql:
+      driverClassName: org.postgresql.Driver
+#      url: jdbc:postgresql://localhost:5432/acme
+      url: jdbc:postgresql://138.201.137.201/acme
+      username: postgresql-username
+      password: postgresql-password
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    mysql:
+      driverClassName: com.mysql.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/acme
+      username: mysql-username
+      password: mysql-password
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+    mariadb:
+      driverClassName: org.mariadb.jdbc.Driver
+      url: jdbc:mariadb://localhost:3306/acme
+      username: mariadb-username
+      password: mariadb-password
+      hibernate:
+        dialect: org.hibernate.dialect.MariaDbDialect
+    sqlite:
+      driverClassName: org.sqlite.JDBC
+      url: jdbc:sqlite:memory:acme?cache=shared
+      username: sqlite-username
+      password: sqlite-password
+      hibernate:
+        dialect: org.hibernate.dialect.SqliteDialect
+    h2:
+      driverClassName: org.h2.Driver
+      url: jdbc:h2:mem:h2db
+      username: h2-username
+      password: h2-password
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+
+
+spring:
+  application:
+    name: PoC SpringBoot
+  main:
+    allow-bean-definition-overriding: true
+  # Database
+  flyway:
+    locations:
+      - db/migration
+      - db/specific/postgresql
+      - db/specific/mysql
+      - db/specific/mariadb
+      - db/specific/sqlite
+      - db/specific/h2
+  jpa:
+#    database: POSTGRESQL
+#    properties:
+#      hibernate:
+        # TODO Change this to create it programmatically instead so that application supports more databases simultaneously
+#        dialect: org.hibernate.dialect.PostgreSQLDialect
+#        dialect: org.hibernate.dialect.PostgreSQL95Dialect
+    hibernate:
+#      ddl-auto: create
+      ddl-auto: validate
+#      ddl-auto: create-drop
+    open-in-view: true
+    show-sql: true
+
+# Flyway
+# TODO This section is only handling PostgreSQL... either make it work for all databases or remove it in favor of programmatically setup
+flyway:
+  url: jdbc:postgresql://localhost:5432/acme
+  user: postgresql-username
+  password: postgresql-password
+#  schemas: acme
